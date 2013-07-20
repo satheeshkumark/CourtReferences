@@ -1,5 +1,10 @@
 package courtreferences.view;
 
+/* 
+ * This class contains the components of the "AddUser Dialog box"
+ * Purpose : Functionalities for adding new user to the system 
+ */
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -34,7 +39,7 @@ public class AddUserDialog extends JDialog {
 	private JLabel lblUserRole;
 	private JComboBox cmbUserRole;
 	private static String[] userroles = {"user","admin"};
-	private UpdateUserSettings updateObj = null;
+	private LoginAuthenticator updateObj = null;
 
 	/**
 	 * Create the dialog.
@@ -42,7 +47,9 @@ public class AddUserDialog extends JDialog {
 	public AddUserDialog() {
 		setTitle("Add User");
 		setResizable(false);
+		/*	Initialize the components for the Add User dialog box	*/
 		initComponents();
+		/*	Initialize the events for the Add User dialog box	*/
 		createEvents();
 	}
 	
@@ -109,11 +116,15 @@ public class AddUserDialog extends JDialog {
 			}
 		});
 		
+		/*	Adds new user to the system when the button is clicked	*/
+		
 		btnAddUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				insertUserDetails();
 			}
 		});
+		
+		/*	Clicking on cancel button clears all the values and closes the dialog */
 		
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,9 +134,11 @@ public class AddUserDialog extends JDialog {
 		});
 	}
 	
+	/*	Adds new user to the system - Only administrator can do this	*/
+	
 	private void insertUserDetails(){
 		if(this.updateObj == null){
-			this.updateObj = new UpdateUserSettings();
+			this.updateObj = new LoginAuthenticator();
 		}
 		int returnvalue = this.updateObj.insertNewUser(this.txtNewUserName.getText(), this.txtDefaultPassword.getText(),(String)this.cmbUserRole.getSelectedItem());
 		if(returnvalue == 0){
@@ -143,10 +156,14 @@ public class AddUserDialog extends JDialog {
 		this.txtDefaultPassword.setText(this.txtNewUserName.getText());
 	}
 	
+	/* Dialog to display failure message when the user is already present	*/
+	
 	private void showFailureInsertDialog(){
 		String failure_msg = "The user " + this.txtNewUserName.getText() + " is already present in the system";
 		JOptionPane.showMessageDialog(null,failure_msg);
 	}
+	
+	/* Dialog to display the success message when the user name is currently enrolled	*/
 
 	private void showSuccessInsertDialog(){
 		String success_msg = "The new user " + this.txtNewUserName.getText() + " is added to the system";

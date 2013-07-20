@@ -9,7 +9,9 @@ import org.apache.pdfbox.pdmodel.encryption.StandardDecryptionMaterial;
 import org.apache.pdfbox.util.PDFTextStripper;
 
 /* 
- * File Description	: Have methods to parse PDF documents and extract titles and the contents themselves
+ * Contains basic structure of each pdf file which is needed to be processed
+ * The countries which have pdf document as their court documents can be instantiated with this class
+ * Have methods to parse PDF documents and extract titles and the contents themselves
  * 
 */
 
@@ -67,6 +69,10 @@ public class ParsePdfDoc {
 			System.out.println("The files belongs to these country cannot be processed");
 		}
 	}
+	
+	/* Processes South African pdf Files
+	 * Similar methods can be added for other country files. It should be written based on the structure of those documents 
+	 * */
 	
 	void processSouthAfricanCaseDetails(String pdfFile){
 		int startPage = 1;

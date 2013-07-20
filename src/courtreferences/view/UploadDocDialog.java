@@ -1,5 +1,10 @@
 package courtreferences.view;
 
+/* 
+ * This class contains the components of the "UploadDocument Dialog box"
+ * Purpose : Functionalities for uploading the documents and extract content from the files 
+ */
+
 import java.awt.BorderLayout;
 import java.awt.Window;
 
@@ -52,9 +57,13 @@ public class UploadDocDialog extends JDialog {
 	 */
 	public UploadDocDialog() {
 		setResizable(false);
+		/*	Initializes the components required for collecting the details of the space where the folder which is needed to be uploaded is present	*/
 		initComponents();
+		/*	Initializes corresponding event handlers	*/
 		createEvents();
 	}
+	
+	/*	Initializes the components required for collecting the details of the space where the folder which is needed to be uploaded is present	*/
 	
 	private void initComponents(){
 		this.CountryNameVector = new Vector<String>();
@@ -100,11 +109,17 @@ public class UploadDocDialog extends JDialog {
 		contentPanel.add(cmbCourtNames);
 	}
 	
+	/*	Initializes corresponding event handlers	*/
+	
 	private void createEvents(){
 		textField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
+		
+		/*	Open the FileChooser dialog box when the mouse is clicked within the textbox	
+		 * 	Get the directory path as input from the window
+		*/
 		
 		textField.addMouseListener(new MouseAdapter() {
 			@Override
@@ -122,13 +137,21 @@ public class UploadDocDialog extends JDialog {
 				else {
 	            }				
 			}
-		});	
+		});
+		
+		/* Close the dialog box when the Cancel button is pressed	*/
 		
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				closeDialog();
 			}
 		});
+		
+		/*  Pass the entire directory structure to the model.
+		 * 	Process all the files in the directory 
+		 * 	Enter the extracted entities from those pdfs into database
+		 *  Close the dialog box once the process is done
+		 */
 		
 		btnUpload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,10 +163,14 @@ public class UploadDocDialog extends JDialog {
 			}
 		});
 		
+		/*Do nothing when the state of Courts combo box is changed	*/
+		
 		cmbCourtNames.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 			}
 		});
+		
+		/*	Load the names of courts belonging to corresponding country when the country name is changed	*/
 		
 		cmbCountryNames.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -158,6 +185,8 @@ public class UploadDocDialog extends JDialog {
 			}
 		});
 	}
+	
+	/*	Method which invokes parsing the pdf content to extract the required information	*/
 	
 	private void parseCaseDocuments(String countryname,String courtname){
 		File dir = new File(this.textField.getText());
@@ -177,59 +206,18 @@ public class UploadDocDialog extends JDialog {
 	      }
 	}
 	
+	/*	Gets the name of the courts to be loaded into the combo box for corresponding country	*/
+	
 	public Vector<String> getCourtComboValues(String countryname){
-		/*Statement stmt = null;
-		Statement stmt1 = null;
-		Connection conn = ConnectionHandler.getConnection();
-		Vector<String> v = new Vector<String>();
-		int cntryid = 0;
-		String getCntryIdQuery = "select CountryId from CountryDetails where CountryName ='" + countryname + "'";
-		try{
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(getCntryIdQuery);
-			if(rs.next()){
-			    cntryid = rs.getInt("CountryId");
-			    String getCourtDetailsQuery = "select CourtName from CourtDetails where CountryId = " + cntryid;
-			    stmt1 = conn.createStatement();
-				ResultSet rs1 = stmt1.executeQuery(getCourtDetailsQuery);
-				while(rs1.next()){
-				    String courtname = rs1.getString("CourtName");
-				    v.add(courtname);
-				}
-			}			
-		}
-		catch(SQLException se){
-			System.out.println("SQL Exception " + se.getMessage());
-		}
-		catch(Exception e){
-			System.out.println("Exception " + e.getMessage());
-		}*/
-		UpdateUserSettings upObj = new UpdateUserSettings();
+		CountryModel upObj = new CountryModel();
 		this.setCourtNameVector(upObj.getCourtValues(countryname));
 		return this.getCourtNameVector();
 	}
 	
+	/* Gets the values of the Country name combox box	*/
+	
 	public void getCountryComboValues(){
-		/*
-		Statement stmt = null;
-		Connection conn = ConnectionHandler.getConnection();
-		Vector<String> v = new Vector<String>();
-		String getCntryNamesQuery = "select CountryName from CountryDetails";
-		try{
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(getCntryNamesQuery);
-			while(rs.next()){
-			    String cntryname = rs.getString("CountryName");
-			    v.add(cntryname);
-			}
-		}
-		catch(SQLException se){
-			System.out.println("SQL Exception " + se.getMessage());
-		}
-		catch(Exception e){
-			System.out.println("Exception " + e.getMessage());
-		}*/
-		UpdateUserSettings upObj = new UpdateUserSettings();
+		CountryModel upObj = new CountryModel();
 		this.setCountryNameVector(upObj.getCountryValues());
 	}
 

@@ -1,5 +1,11 @@
 package courtreferences.model;
 
+/*
+ * Each (country,court) has its own format. Extraction mechanism varies depending on that.
+ * Contains methods to extract case title and references to the foreign court in each citation
+ * 
+ */
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -76,6 +82,8 @@ public class SouthAfricanFiles {
 		this.heardDate = heardDate;
 	}
 	
+	/* Extracts case id for each SouthAfrican case document	*/
+	
 	void extractCaseId(String CourtName,String pdfFileContent){
 		if(CourtName.equals("Constitutional Court")){
 			this.setCaseId(extractCNSTCRTCaseId(pdfFileContent));
@@ -84,6 +92,8 @@ public class SouthAfricanFiles {
 			this.setCaseId(null);
 		}
 	}
+	
+	/* Extracts Participants name for each SouthAfrican case document	*/
 	
 	void extractParticipants(String CourtName,String pdfFileContent){
 		if(CourtName.equals("Constitutional Court")){
@@ -94,6 +104,7 @@ public class SouthAfricanFiles {
 		}
 	}
 
+	/* Extracts decision date for each SouthAfrican case document	*/
 	
 	void extractDecisionDate(String CourtName,String pdfFileContent){
 		if(CourtName.equals("Constitutional Court"))
@@ -101,12 +112,17 @@ public class SouthAfricanFiles {
 		else
 			this.setDecisionDate(null);
 	}
+	
+	/* Extracts heard date for each SouthAfrican case document	*/
+	
 	void extractHeardDate(String CourtName,String pdfFileContent){
 		if(CourtName.equals("Constitutional Court"))
 			this.setHeardDate(extractCNSTCRTHeardDate(pdfFileContent));
 		else
 			this.setHeardDate(null);
 	}
+	
+	/* Extracts citations for each SouthAfrican case document	*/
 	
 	void extractCitations(String CourtName,List<String> fileContent){
 		if(CourtName.equals("Constitutional Court")){
@@ -118,9 +134,13 @@ public class SouthAfricanFiles {
 		}		
 	}
 	
+	/* Extracts Case id for SouthAfrican Constitutional Court case document*/
+	
 	String extractCNSTCRTCaseId(String pdfFileContent){
 		return pdfFileContent.substring(checkCaseIdPattern(pdfFileContent,0,0),checkCaseIdPattern(pdfFileContent,0,1));
 	}
+	
+	/* Extracts citations for SouthAfrican Constitutional Court case document*/
 	
 	void extractCNSTCRTCitations(List<String> fileContent){
 		int currentCitationId = 1;
@@ -145,6 +165,9 @@ public class SouthAfricanFiles {
 				//System.out.println("Processing Citation id : " + currentCitationId);
 				String currCitationString = pageContent.substring(citationStartIndex, citationEndIndex).replaceAll("\n", " ");
 				String citationBodyString = extractCitationBodyString(pageContent.substring(0,footerStartIndex),currentCitationId);
+				
+				/*	South African Citation object is created for each citation found in the footer	*/
+				
 				SouthAfricanCitations currentCitationObj = new SouthAfricanCitations(this.getCaseId(),this.getCountryName(),this.getCourtName(),currentCitationId,currCitationString.trim(),citationBodyString,currentPageNo);
 				//currentCitationObj.setCitationBodyString();
 				this.getCitationObjs().add(currentCitationObj);
@@ -159,6 +182,8 @@ public class SouthAfricanFiles {
 		//filterCitations(citationMap);
 		return;
 	}
+	
+	/* Extracts the content around the position where the citation has been referred in the body of the text in SouthAfrican Constitutional Court case document*/
 	
 	String extractCitationBodyString(String pageContent, int currentCitationId){
 		StringBuffer citationBodyString = new StringBuffer();
@@ -185,6 +210,8 @@ public class SouthAfricanFiles {
 		}
 		return citationBodyString.toString();
 	}
+	
+	/* Extracts the participants name from SouthAfrican Constitutional Court case document*/
 
 	List<String> extractCNSTCRTParticipants(String pdfFileContent){
 		int startIndex = checkCaseIdPattern(pdfFileContent, 0, 1) + 1;
@@ -209,6 +236,8 @@ public class SouthAfricanFiles {
 			endIndex = endIndex1;
 		return extractNames(pdfFileContent.substring(startIndex,endIndex));
 	}
+	
+	/* Filters just the name of the participants	*/
 	
 	List<String> extractNames(String inputString){
 		List<String> nameList = new ArrayList<String>();
@@ -237,6 +266,8 @@ public class SouthAfricanFiles {
 		return nameList;
 	}
 	
+	/* Pattern which matches the inputString and searches for the citationid	*/
+	
 	int checkCitationPattern(String inputString, int citationid, int startindex){
 		String citationPatternString = "\n" + citationid + " .*";
 		Pattern citationPattern = Pattern.compile(citationPatternString);
@@ -247,6 +278,7 @@ public class SouthAfricanFiles {
 			return -1;
 	}
 	
+	/* Searches for the occurrence of any names in the input String	and returns start or end index depending on the request*/
 	
 	int checkCapitalNamePattern(String inputString, int startIndex, int option){
 		String namePatternString = "\\b([A-Z0-9])+\\b";
@@ -260,6 +292,8 @@ public class SouthAfricanFiles {
 			return -1;
 	}
 	
+	/* Searches the pattern with case id in the inputString	 and returns start or end index depending on the request*/ 
+	
 	int checkCaseIdPattern(String inputString, int startIndex, int option){
 		String caseidPatternString = "[0-9]+/[0-9]+";
 		Pattern caseidPattern = Pattern.compile(caseidPatternString);
@@ -271,6 +305,8 @@ public class SouthAfricanFiles {
 		else
 			return -1;
 	}
+	
+	/* Searches the year pattern in the input String and retuns the start or end index depending on the request	*/
 	
 	int checkCaseYearPattern(String inputString, int startIndex,int option){
 		String caseYearPatternString = "(?i)\\[([12][0-9]{3})\\]( )?ZACC( )?[0-9]+";
@@ -284,6 +320,8 @@ public class SouthAfricanFiles {
 			return -1;
 	}
 	
+	/* Searches for the heard Date pattern in the input string and returns the start or end index depending on the request */
+	
 	int checkHeardDatePattern(String inputString, int startIndex, int opt){
 		String heardDatePatternString = "(?i)Hear(d)?( )?(On)?";
 		Pattern heardDatePattern = Pattern.compile(heardDatePatternString);
@@ -295,6 +333,8 @@ public class SouthAfricanFiles {
 		else
 			return -1;
 	}
+	
+	/* Searches for the Decision Date pattern in the input string and returns the start or end index depending on the request */
 	
 	int checkDecisionDatePattern(String inputString, int startIndex, int opt){
 		String decisionDatePatternString = "(?i)(Deci(ded|sion)?|deli(vered)?)( )?(On)?(Date)?";
@@ -308,6 +348,8 @@ public class SouthAfricanFiles {
 			return -1;
 	}
 	
+	/* Searches for the Date pattern in the input string and returns the start or end index depending on the request */
+	
 	int checkDatePattern(String inputString, int startIndex, int opt){
 		String datePatternString = "(?i)([1-9]|[12][0-9]|3[01])[- /.](Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sep(tember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)[- /.](1[9][0-9][0-9]|2[0-9][0-9][0-9])";
 		Pattern datePattern = Pattern.compile(datePatternString);
@@ -319,6 +361,8 @@ public class SouthAfricanFiles {
 		else
 			return -1;
 	}
+	
+	/* Searches for the Decision Date Pattern in South African Constitutional court. If not found, the default date is set */
 	
 	String extractCNSTCRTDecisionDate(String pdfFileContent){
 		String decisionDate  = null;
@@ -335,6 +379,7 @@ public class SouthAfricanFiles {
 		return decisionDate;
 	}
 
+	/* Searches for the Heard Date Pattern in South African Constitutional court. If not found, the default date is set */
 	String extractCNSTCRTHeardDate(String pdfFileContent){
 		String heardDate  = null;
 		int startIndex = 0;
@@ -349,6 +394,8 @@ public class SouthAfricanFiles {
 			heardDate = "1 January 1900";
 		return heardDate;
 	}
+	
+	/* Writes the output to the file	*/
 	
 	void writeDetails(){
 		try{

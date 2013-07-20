@@ -1,5 +1,10 @@
 package courtreferences.view;
 
+/* 
+ * This class contains the components of the "RemoveUser Dialog box"
+ * Purpose : Functionalities for removing user from the system 
+ */
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -24,7 +29,7 @@ public class RemoveUserDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUserName;
-	private UpdateUserSettings updateObj = null;
+	private LoginAuthenticator updateObj = null;
 	private JButton btnDeleteUser;
 	private JButton cancelButton;
 	private JLabel lblEnterUserName;
@@ -33,9 +38,13 @@ public class RemoveUserDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public RemoveUserDialog() {
+		/*	Creates the components required for this window	*/
 		initiateComponents();
+		/*	Initilizes the events associated with the components	*/
 		createEvents();
 	}
+	
+	/*	Creates the components required for this window	*/
 	
 	private void initiateComponents(){
 		setResizable(false);
@@ -74,12 +83,16 @@ public class RemoveUserDialog extends JDialog {
 		}
 	}
 	
+	/*	Initilizes the events associated with the components	*/
+	
 	private void createEvents(){
+		/*	Remove the details of the user from the database	*/
 		btnDeleteUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeUserDetails();
 			}
 		});
+		/* Closes this dialog	*/
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				closeDialog();
@@ -87,19 +100,25 @@ public class RemoveUserDialog extends JDialog {
 		});
 	}
 	
+	/*	Shows failure message when the user tries to delete who is not in the system	*/
+	
 	private void showFailureDeleteDialog(){
 		String failure_msg = "The user " + this.txtUserName.getText() + " is not present in the system";
 		JOptionPane.showMessageDialog(null,failure_msg);
 	}
+	
+	/*	Shows success message after the user is successdully removed from the system	*/
 	
 	private void showSuccessDeleteDialog(){
 		String success_msg = "The user " + this.txtUserName.getText() + " has been succesfully removed the system";
 		JOptionPane.showMessageDialog(null,success_msg);
 	}
 	
+	/*	Communicates with the model and removes the user details	*/
+	
 	private void removeUserDetails(){
 		if(this.updateObj == null){
-			this.updateObj = new UpdateUserSettings();
+			this.updateObj = new LoginAuthenticator();
 		}
 		int returnvalue = this.updateObj.deleteExistingUser(this.txtUserName.getText());
 		if(returnvalue == 0){

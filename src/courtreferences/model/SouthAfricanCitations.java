@@ -1,5 +1,11 @@
 package courtreferences.model;
 
+/*
+ * Contains attributes from Citations class from where it is extended
+ * Contains methods to search foreign citations, international references and treaties
+ * It has to implement methods in Search interface since it has extracted the abstract method which implemented the Search interface
+ */
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +17,8 @@ import java.util.regex.Pattern;
 
 public class SouthAfricanCitations extends Citations{
 
+	/* Loads foreign reference formats, International court formats and treaty formats when the class is first invoked	and only once for all the citation objects*/
+	
 	static {
 		loadForeignReferenceFormats();
 	}
@@ -20,6 +28,7 @@ public class SouthAfricanCitations extends Citations{
 	}
 	
 	public SouthAfricanCitations(String caseid, String countryName, String courtName, int pdfcitationid, String citationString, String citationBodyString, int pageNo){
+		/* initialize the citation object with the values passed to the function	*/
 		initializeValues(caseid, countryName, courtName, pdfcitationid, citationString, citationBodyString, pageNo);
 	}
 	
@@ -47,54 +56,44 @@ public class SouthAfricanCitations extends Citations{
 	public void setCitationString(String citationString) {
 		this.citationString = citationString;
 	}
-
 	public String getCitationBodyString() {
 		return citationBodyString;
 	}
-
 	public void setCitationBodyString(String citationBodyString) {
 		this.citationBodyString = citationBodyString;
 	}
-	
 	public static List<ForeignReferences> getSearchObjs() {
 		return searchObjs;
 	}
-
 	public static void setSearchObjs(List<ForeignReferences> searchObjs) {
 		Citations.searchObjs = searchObjs;
 	}
-	
 	public List<CitationCases> getRefCases() {
 		return refCases;
 	}
-
 	public void setRefCases(ArrayList<CitationCases> refCases) {
 		this.refCases = refCases;
 	}
-	
 	public int getPageNo() {
 		return pageNo;
 	}
-
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
 	}
-
 	public int getCitationid() {
 		return citationid;
 	}
-
 	public void setCitationid(int citationid) {
 		this.citationid = citationid;
 	}
-	
 	public List<String> getCitationCaseTitles() {
 		return citationCaseTitles;
 	}
-
 	public void setCitationCaseTitles(List<String> citationCaseTitles) {
 		this.citationCaseTitles = citationCaseTitles;
 	}
+	
+	/* Load the format of the foreign references from the table	*/
 	
 	public static void loadForeignReferenceFormats(){
 		ConnectionHandler connHndlr = new ConnectionHandler();
@@ -118,6 +117,8 @@ public class SouthAfricanCitations extends Citations{
 		System.out.println("Done with loading foreign references");
 	}
 	
+	/* Calls respective functions to extract the citation content from the documents	*/
+	
 	private void initializeValues(String caseid, String countryName, String courtName, int pdfcitationid, String citationString, String citationBodyString, int pageNo){
 		this.setCaseId(caseid);
 		this.setCountryname(countryName);
@@ -132,6 +133,7 @@ public class SouthAfricanCitations extends Citations{
 		System.out.println("Number of titles : " + this.getCitationCaseTitles().size());
 	}
 	
+	/* Searches the occurence of all the foreign references in each and every citation	*/
 	
 	public void searchForeignReferences() {
 		// TODO Auto-generated method stub
@@ -141,6 +143,10 @@ public class SouthAfricanCitations extends Citations{
 		}
 		return;
 	}
+	
+	/* Gets the foreign reference object as input which contain country name, court name and corresponding format which will be searched
+	 * Uses the citation string and the body string to find out whether any case has been cited and adds the cited case to RefCases list
+	 */
 	
 	public void searchCitationFormats(ForeignReferences fObj){
 		String citationPatternString = fObj.getSearchRegex();
@@ -156,6 +162,7 @@ public class SouthAfricanCitations extends Citations{
 		return;
 	}
 	
+	/* Searches for the title of the cases in the citation	*/
 	public void searchRefCaseTitle(){
 		this.setCitationCaseTitles(new ArrayList<String>());
 		for(String title : extractRefCaseTitlesSA(this.getCitationString())){
@@ -167,6 +174,8 @@ public class SouthAfricanCitations extends Citations{
 			//System.out.println("Title Here 2 : " + title);
 		}
 	}
+	
+	/* */
 	
 	private List<String> extractRefCaseTitlesSA(String citationString){
 		//System.out.println("Citation String inside extract case title : " + citationString);

@@ -1,5 +1,10 @@
 package courtreferences.model;
 
+/*
+ * Model class for ForeignCase objects
+ * Defines search pattern for each Country and Court name combination
+ */
+
 public class ForeignReferences{
 	private String countryName;
 	private String courtName;

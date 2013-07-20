@@ -1,4 +1,10 @@
 package courtreferences.model;
+
+/* 
+ * Contains functionalities to establish and terminate connection with mysql database
+ * 
+ */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

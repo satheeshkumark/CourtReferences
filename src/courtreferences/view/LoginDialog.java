@@ -1,5 +1,10 @@
 package courtreferences.view;
 
+/* 
+ * This class contains the components for prompting the user to enter login details
+ * Purpose : Functionalities for getting the login credentials and authenticating the user
+ */
+
 import java.awt.Window;
 
 import javax.swing.JButton;
@@ -51,7 +56,9 @@ public class LoginDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public LoginDialog() {
+		/*	Initialize all the components	*/
 		initComponents();
+		/*	Initialize the Event handlers	*/
 		createEvents();
 	}
 	
@@ -108,18 +115,24 @@ public class LoginDialog extends JDialog {
 	}
 	
 	private void createEvents(){
+		
+		/* Gets the credentials in this window and passes to the model for authentication	*/
+		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				verifyCredentials();
 			}
 		});
 		
+		/* Clicking on cancel button will just close the dialog box	*/
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cancelButtonAction();
 			}
 		});
 	}
+	
+	/*	The obtained credentials are obtained from the user through the dialog box and the result of the authenticity can be given to the main window	*/ 
 	
 	private void verifyCredentials(){
 		LoginAuthenticator ln = new LoginAuthenticator();
@@ -132,6 +145,9 @@ public class LoginDialog extends JDialog {
 		displayStatus();
 	}
 	
+	/*	When the credentials are wrong error message will be displayed
+	 * 	When the credentials are right the dialog box will be closed
+	 * */
 	private void displayStatus(){
 		if(this.getUserStatus() == -1){
 			this.lblInvalidPassword.setVisible(true);
@@ -144,6 +160,8 @@ public class LoginDialog extends JDialog {
 			this.dispose();
 		}
 	}
+	
+	/* Clicking on cancel button will just close the window	*/
 	
 	private void cancelButtonAction(){
 		Window win = SwingUtilities.getWindowAncestor(this);

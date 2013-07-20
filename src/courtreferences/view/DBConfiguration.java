@@ -1,5 +1,10 @@
 package courtreferences.view;
 
+/* 
+ * This class contains the components for updating the "Database configuration settings"
+ * Purpose : Functionalities for updating the db settings
+ */
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.io.BufferedWriter;
@@ -45,8 +50,11 @@ public class DBConfiguration extends JDialog {
 	 */
 	public DBConfiguration() {
 		setResizable(false);
+		/*	Initialize the components of the window	*/
 		initComponents();
+		/*	Default settings from the config file will be set in the controls	*/
 		loadDefaultValues();
+		/*	Initialize event handlers	*/
 		createEvents();
 	}
 	
@@ -128,6 +136,8 @@ public class DBConfiguration extends JDialog {
 		}
 	}
 	
+	/*	Loads default configuration settings to connect to mysql db from config file	*/
+	
 	private void loadDefaultValues(){
 		Scanner sc = null;
 		try{			
@@ -155,6 +165,8 @@ public class DBConfiguration extends JDialog {
 	}
 	
 	private void createEvents(){
+		
+		/*	Prompts the user to enter new db settings and updates it when the update button is pressed	*/
 		UpdateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String title = "Confirm DB Settings Update";
@@ -181,6 +193,8 @@ public class DBConfiguration extends JDialog {
 	private void closeDialog(){
 		this.dispose();
 	}
+	
+	/*	Updates the new db settings in the dbconfig.txt file	*/
 	
 	private void updateDbConfigFile(){
 		FileWriter fstream;

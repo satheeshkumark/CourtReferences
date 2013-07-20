@@ -1,5 +1,10 @@
 package courtreferences.model;
 
+/*
+ * There may be more than one case cited in each citations
+ * This class describes the basic structure of each case such as country and court to which the case belongs to and also the citation id where this case is referred
+ */
+
 public class CitationCases {
 	private String countryName;
 	private String courtName;

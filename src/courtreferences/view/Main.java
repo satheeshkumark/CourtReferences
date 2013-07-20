@@ -1,5 +1,13 @@
 package courtreferences.view;
 
+
+/*
+ * This class contains the components of the main launching window of the application
+ * An empty main window with the default menu bars at the top will be displayed
+ * This class is the "Entry point of the application" 
+ */
+
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -15,12 +23,10 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
 
-import courtreferences.model.*;
-
 public class Main extends JFrame {
 
 	/**
-	 * 
+	 * The components of the main Window
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -68,6 +74,7 @@ public class Main extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
+			/*	Defines the look and feel of the native system where the application runs	*/
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -89,10 +96,15 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
+		setTitle("Court References - International Relations");
+		/*	Initializes all the components required for the main window	*/
 		initComponents();
+		/*	Initializes the events associated with the components of the main window	*/
 		createEvents();
 		//this.setUserStatus(dialog1.getUserStatus());
 	}
+	
+	/*	Creates all the components and adds to the main window	*/
 	
 	private void initComponents(){
 		setTitle("My Java GUI");
@@ -162,7 +174,11 @@ public class Main extends JFrame {
 		desktopPane.setLayout(new BorderLayout(0, 0));
 	}
 	
+	/* Contains all the event handler mechanism	*/
+	
 	private void createEvents(){
+		
+		/*	Exit when the "Exit" button is pressed	*/
 		
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -170,19 +186,25 @@ public class Main extends JFrame {
 			}
 		});
 		
+		/*	Open "Login dialog box" when the Login button is pressed	*/
+		
 		mntmLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				openDialogAction();				
 			}
 		});	
 		
+		/*	Disable all the entities and close the db connection when the logout button is pressed	*/
+		
 		mntmLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				disableControls();
-				LoginAuthenticator ln = new LoginAuthenticator();
-				ln.logOutAction();
+				//LoginAuthenticator ln = new LoginAuthenticator();
+				//ln.logOutAction();
 			}
 		});
+		
+		/*	Launch Open db setting window when this button is pressed */
 		
 		mntmConfiguresettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -190,17 +212,24 @@ public class Main extends JFrame {
 			}
 		});
 		
+		/*	Launch "Add New User dialog box" when the "Add User" button is pressed	*/
+		
 		mntmAdduser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addNewUserToDB();
 			}
 		});
 		
+		
+		/*	Launch "Delete Existing User dialog box" when the "Delete User" button is pressed	*/
+		
 		mntmRemoveuser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeUserFromDB();
 			}
 		});
+		
+		/*	Launch the upload documents dialog box when this buttons is pressed	*/
 		
 		mntmUploaddoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -210,12 +239,16 @@ public class Main extends JFrame {
 		
 	}
 	
+	/*	Create a new window object for uploading a Document	*/
+	
 	private void displayUploadDocDialog(){
 		if(uploaddocdialog == null){
 			uploaddocdialog = new UploadDocDialog();
 		}
 		uploaddocdialog.setVisible(true);
 	}
+	
+	/*	Create a new Add user dialog box object	*/
 	
 	private void addNewUserToDB(){
 		if (this.adduserdialog == null) {
@@ -224,6 +257,8 @@ public class Main extends JFrame {
 	      this.adduserdialog.setVisible(true);
 	}
 	
+	/*	Create a new Remove user dialog box object	*/
+	
 	private void removeUserFromDB(){
 		if (this.removeuserdialog == null) {
 	         this.removeuserdialog = new RemoveUserDialog();
@@ -231,12 +266,16 @@ public class Main extends JFrame {
 		this.removeuserdialog.setVisible(true);
 	}
 	
+	/*	Create a Configure Db Settings dialog box object	*/
+	
 	private void configureDbSettings(){
 		 if (this.dbConfigDialog == null) {
 	         this.dbConfigDialog = new DBConfiguration();
 	      }
 	      this.dbConfigDialog.setVisible(true);
 	}
+	
+	/*	Method to check user validity and enable all the controls if the user is legitimate	*/
 	
 	private void openDialogAction(){
 	      if (dialog1 == null) {
@@ -247,10 +286,15 @@ public class Main extends JFrame {
 	      this.setUserStatus(dialog1.getUserStatus());
 	      System.out.println("Returned value from the dialog");
 	      System.out.println(this.getUserStatus());
+	      
+	      /*	Enable the controls in the main window only when the user is being authenticated by our authentication system	*/
+	      
 	      if(this.getUserStatus() == 0 || this.getUserStatus() == 1){
 	    	  enableControls();
 	      }
 	}
+	
+	/*	Enables all the controls in the main window	*/
 	
 	private void enableControls(){
 		if(this.getUserStatus() == 0){
@@ -262,6 +306,8 @@ public class Main extends JFrame {
 		this.mnReports.setEnabled(true);
 		this.mnSearch.setEnabled(true);
 	}
+	
+	/*	Disable all the controls in the main window	*/
 	
 	private void disableControls(){
 		this.mntmRemoveuser.setEnabled(false);
