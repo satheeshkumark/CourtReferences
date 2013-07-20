@@ -1,0 +1,430 @@
+afghanistan	afghanistan
+albania	albania
+algeria	algeria
+american samoa	american samoa
+andorra	andorra
+angola	angola
+antigua and barbuda	antigua and barbuda
+argentina	argentina
+armenia	armenia
+aruba	aruba
+australia	australia
+austria	austria
+azerbaijan	azerbaijan
+bahamas	bahamas
+bahrain	bahrain
+bangladesh	bangladesh
+barbados	barbados
+belarus	belarus
+belgium	belgium
+belize	belize
+benin	benin
+bermuda	bermuda
+bhutan	bhutan
+bolivia	bolivia
+bosnia and herzegovina	bosnia and herzegovina
+botswana	botswana
+brazil	brazil
+brunei darussalam	brunei darussalam
+bulgaria	bulgaria
+burkina faso	burkina faso
+burundi	burundi
+cambodia	cambodia
+cameroon	cameroon
+canada	canada
+cape verde	cape verde
+cayman islands	cayman islands
+central african republic	central african republic
+chad	chad
+chile	chile
+china	china
+colombia	colombia
+comoros	comoros
+congo	congo
+congo	congo
+costa rica	costa rica
+cote d'ivoire	cote d'ivoire
+croatia	croatia
+cuba	cuba
+cyprus	cyprus
+czech republic	czech republic
+denmark	denmark
+djibouti	djibouti
+dominica	dominica
+dominica republic	dominica republic
+ecuador	ecuador
+egypt	egypt
+el salvador	el salvador
+equatorial guinea	equatorial guinea
+eritrea	eritrea
+estonia	estonia
+ethiopia	ethiopia
+faroe islands	faroe islands
+fiji	fiji
+finland	finland
+france	france
+french polynesia	french polynesia
+gabon	gabon
+gambia	gambia
+georgia	georgia
+germany	germany
+ghana	ghana
+greece	greece
+greenland	greenland
+grenada	grenada
+guam	guam
+guatemala	guatemala
+guinea	guinea
+guinea-bissau	guinea-bissau
+guyana	guyana
+haiti	haiti
+honduras	honduras
+hong kong	hong kong
+hungary	hungary
+iceland	iceland
+india	india
+indonesia	indonesia
+iran	iran
+iraq	iraq
+ireland	ireland
+isle of man	isle of man
+israel	israel
+italy	italy
+jamaica	jamaica
+japan	japan
+jordan	jordan
+kazakhstan	kazakhstan
+kenya	kenya
+kiribati	kiribati
+north korea	north korea
+south korea	south korea
+kosovo	kosovo
+kuwait	kuwait
+kyrgyzstan	kyrgyzstan
+laos	laos
+latvia	latvia
+lebanon	lebanon
+lesotho	lesotho
+liberia	liberia
+libya	libya
+liechtenstein	liechtenstein
+lithuania	lithuania
+luxembourg	luxembourg
+macau	macau
+macedonia	macedonia
+madagascar	madagascar
+malawi	malawi
+malaysia	malaysia
+maldives	maldives
+mali	mali
+malta	malta
+marshall islands	marshall islands
+mauritania	mauritania
+mauritius	mauritius
+mexico	mexico
+micronesia	micronesia
+moldova	moldova
+monaco	monaco
+mongolia	mongolia
+montenegro	montenegro
+morocco	morocco
+mozambique	mozambique
+namibia	namibia
+nauru	nauru
+nepal	nepal
+netherlands	netherlands
+new caledonia	new caledonia
+new zealand	new zealand
+nicaragua	nicaragua
+niger	niger
+nigeria	nigeria
+northern mariana islands	northern mariana islands
+norway	norway
+oman	oman
+pakistan	pakistan
+palau	palau
+panama	panama
+papua new guinea	papua new guinea
+paraguay	paraguay
+peru	peru
+philippines	philippines
+poland	poland
+portugal	portugal
+puerto rico	puerto rico
+qatar	qatar
+romania	romania
+russia	russia
+rwanda	rwanda
+saint kitts and nevis	saint kitts and nevis
+saint lucia	saint lucia
+saint vincent and the grenadines	saint vincent and the grenadines
+samoa	samoa
+san marino	san marino
+sao tome and principe	sao tome and principe
+saudi arabia	saudi arabia
+senegal	senegal
+serbia	serbia
+seychelles	seychelles
+sierra leone	sierra leone
+singapore	singapore
+slovakia	slovakia
+slovenia	slovenia
+solomon islands	solomon islands
+somalia	somalia
+south africa	south africa
+spain	spain
+sri lanka	sri lanka
+sudan	sudan
+suriname	suriname
+swaziland	swaziland
+sweden	sweden
+switzerland	switzerland
+syria	syria
+taiwan	taiwan
+tajikistan	tajikistan
+tanzania	tanzania
+thailand	thailand
+timor-leste	timor-leste
+togo	togo
+tonga	tonga
+trinidad and tobago	trinidad and tobago
+tunisia	tunisia
+turkey	turkey
+turkmenistan	turkmenistan
+tuvalu	tuvalu
+uganda	uganda
+ukraine	ukraine
+united arab emirates	united arab emirates
+united kingdom	united kingdom
+united states	united states
+uruguay	uruguay
+uzbekistan	uzbekistan
+vanuatu	vanuatu
+venezuela	venezuela
+vietnam	vietnam
+virgin islands	virgin islands
+yemen	yemen
+zambia	zambia
+zimbabwe	zimbabwe
+afghan	afghanistan
+albanian	albania
+algerian	algeria
+andorran	andorra
+angolan	angola
+antiguan	antigua and barbuda
+barbudan	antigua and barbuda
+argentine	argentina
+argentinean	argentina
+armenian	armenia
+australian	australia
+ozzie	australia
+aussie	australia
+austrian	austria
+azerbaijani	azerbaijan
+bahamian	the bahamas
+bahraini	bahrain
+bangladeshi	bangladesh
+barbadian	barbados
+bajuns	barbados
+belarusian	belarus
+belgian	belgium
+belizean	belize
+beninese	benin
+bhutanese	bhutan
+bolivian	bolivia
+bosnian	bosnia and herzegovina
+herzegovinian	bosnia and herzegovina
+motswana	botswana
+batswana	botswana
+brazilian	brazil
+bruneian	brunei
+bulgarian	bulgaria
+burkinabe	burkina faso
+burundian	burundi
+cambodian	cambodia
+cameroonian	cameroon
+canadian	canada
+cape verdian	cape verde
+cape verdean	cape verde
+central african	central african republic
+chadian	chad
+chilean	chile
+chinese	china
+colombian	colombia
+comoran	comoros
+congolese	congo
+costa rican	costa rica
+ivorian	cote d'ivoire
+croatian	croatia
+croat	croatia
+cuban	cuba
+cypriot	cyprus
+czech	czech republic
+dane	denmark
+danish	denmark
+djibouti	djibouti
+dominican	dominica
+dominican	dominican republic
+east timorese	east timor
+ecuadorean	ecuador
+egyptian	egypt
+salvadoran	el salvador
+equatorial guinean	equatorial guinea
+equatoguinean	equatorial guinea
+eritrean	eritrea
+estonian	estonia
+ethiopian	ethiopia
+fijian	fiji
+finnish	finland
+finn	finland
+french	france
+gabonese	gabon
+gambian	gambia
+georgian	georgia
+german	germany
+ghanaian	ghana
+greek	greece
+grenadian	grenada
+grenadan	grenada
+guatemalan	guatemala
+guinean	guinea
+guinea-bissauan	guinea-bissau
+guyanese	guyana
+haitian	haiti
+honduran	honduras
+hungarian	hungary
+icelander	iceland
+indian	india
+indonesian	indonesia
+iranian	iran
+iraqi	iraq
+irish	ireland
+israeli	israel
+italian	italy
+jamaican	jamaica
+japanese	japan
+jordanian	jordan
+kazakhstani	kazakhstan
+kenyan	kenya
+i-kiribati	kiribati
+north korean	north korea
+south korean	south korea
+kosovar	kosovo
+kuwaiti	kuwait
+kyrgyz	kyrgyz republic
+kirghiz	kyrgyz republic
+lao	laos
+laotian	laos
+latvian	latvia
+lebanese	lebanon
+mosotho	lesotho
+basotho	lesotho
+liberian	liberia
+libyan	libya
+liechtensteiner	liechtenstein
+lithuanian	lithuania
+luxembourger	luxembourg
+macedonian	macedonia
+malagasy	madagascar
+malawian	malawi
+malaysian	malaysia
+maldivan	maldives
+malian	mali
+maltese	malta
+marshallese	marshall islands
+mauritanian	mauritania
+mauritian	mauritius
+mexican	mexico
+micronesian	micronesia
+moldovan	moldova
+monegasque	monaco
+monacan	monaco
+mongolian	mongolia
+montenegrin	montenegro
+moroccan	morocco
+mozambican	mozambique
+burmese	burma
+myanmarese	myanmar
+namibian	namibia
+nauruan	nauru
+nepalese	nepal
+dutch	netherlands
+new zealander	new zealand
+kiwi	new zealand
+nicaraguan	nicaragua
+nigerien	niger
+nigerian	nigeria
+norwegian	norway
+omani	oman
+pakistani	pakistan
+palauan	palau
+panamanian	panama
+papua new guinean	papua new guinea
+paraguayan	paraguay
+peruvian	peru
+filipino	philippines
+pole or polish	poland
+portuguese	portugal
+qatari	qatar
+romanian	romania
+russian	russia
+rwandan	rwanda
+kittian and nevisian	saint kitts and nevis
+saint lucian	saint lucia
+samoan	samoa
+sammarinese	san marino
+san marinese	san marino
+sao tomean	sao tome
+saudi	saudi arabia
+saudi arabian	saudi arabia
+senegalese	senegal
+serbian	serbia
+seychellois	seychelles
+sierra leonean	sierra leone
+singaporean	singapore
+slovak	slovakia
+slovakian	slovakia
+slovene	slovenia
+slovenian	slovenia
+solomon islander	solomon islands
+somali	somalia
+south african	south africa
+spaniard	spain
+spanish	spain
+sri lankan	sri lanka
+sudanese	sudan
+surinamer	suriname
+swazi	swaziland
+swede	sweden
+swedish	sweden
+swiss	switzerland
+syrian	syria
+taiwanese	taiwan
+tajik	tajikistan
+tadzhik	tajikistan
+tanzanian	tanzania
+thai	thailand
+togolese	togo
+tongan	tonga
+trinidadian	trinidad and tobago
+tobagonian	trinidad and tobago
+tunisian	tunisia
+turk	turkey
+turkish	turkey
+turkmen	turkmenistan
+tuvaluan	tuvalu
+ugandan	uganda
+ukrainian	ukraine
+emirian	united	arab emirates
+british	united kingdom
+american	united states
+uruguayan	uruguay
+uzbek	uzbekistan
+uzbekistani	uzbekistan
+ni-vanuatu	vanuatu
+vatican city	vatican city
+venezuelan	venezuela
+vietnamese	vietnam
+yemeni or yemenite	yemen
+zambian	zambia
+zimbabwean	zimbabwe
