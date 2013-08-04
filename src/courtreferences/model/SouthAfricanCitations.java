@@ -62,10 +62,10 @@ public class SouthAfricanCitations extends Citations{
 	public void setCitationBodyString(String citationBodyString) {
 		this.citationBodyString = citationBodyString;
 	}
-	public static List<ForeignReferences> getSearchObjs() {
+	public static List<ForeignCourt> getSearchObjs() {
 		return searchObjs;
 	}
-	public static void setSearchObjs(List<ForeignReferences> searchObjs) {
+	public static void setSearchObjs(List<ForeignCourt> searchObjs) {
 		Citations.searchObjs = searchObjs;
 	}
 	public List<CitationCases> getRefCases() {
@@ -100,11 +100,11 @@ public class SouthAfricanCitations extends Citations{
 		Connection conn = connHndlr.getConnection();
 		System.out.println("Loading Foreign References");
 		try{
-			String CitationFetchQuery = "select CountryTable.CountryName, CourtTable.CourtName, CourtTable.CitationRegex from CountryDetails CountryTable inner join CourtDetails CourtTable on CountryTable.CountryId = CourtTable.CountryId";
+			String CitationFetchQuery = "select CountryTable.CountryId, CourtTable.CourtId, CountryTable.CountryName, CourtTable.CourtName, CourtTable.CitationRegex from CountryDetails CountryTable inner join CourtDetails CourtTable on CountryTable.CountryId = CourtTable.CountryId";
 			Statement stmt = conn.createStatement();
 			ResultSet resultSet = stmt.executeQuery(CitationFetchQuery);
 			while(resultSet.next()){
-				ForeignReferences currentobj = new ForeignReferences(resultSet.getString(1), resultSet.getString(2),resultSet.getString(3));
+				ForeignCourt currentobj = new ForeignCourt(resultSet.getInt(1),resultSet.getInt(2),resultSet.getString(3), resultSet.getString(4),resultSet.getString(5));
 				SouthAfricanCitations.searchObjs.add(currentobj);
 			}
 		}
@@ -137,7 +137,7 @@ public class SouthAfricanCitations extends Citations{
 	
 	public void searchForeignReferences() {
 		// TODO Auto-generated method stub
-		for(ForeignReferences fObj : SouthAfricanCitations.getSearchObjs()){
+		for(ForeignCourt fObj : SouthAfricanCitations.getSearchObjs()){
 			if(fObj.getSearchRegex() != null)
 				searchCitationFormats(fObj);
 		}
@@ -148,7 +148,7 @@ public class SouthAfricanCitations extends Citations{
 	 * Uses the citation string and the body string to find out whether any case has been cited and adds the cited case to RefCases list
 	 */
 	
-	public void searchCitationFormats(ForeignReferences fObj){
+	public void searchCitationFormats(ForeignCourt fObj){
 		String citationPatternString = fObj.getSearchRegex();
 		Pattern citationPattern = Pattern.compile(citationPatternString);
 		Matcher citationMatcher = citationPattern.matcher(this.getCitationString());

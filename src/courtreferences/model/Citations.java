@@ -19,7 +19,7 @@ public abstract class Citations implements Search{
 	protected String citationBodyString;
 	protected int pageNo;
 	protected List<String> citationCaseTitles;
-	static protected List<ForeignReferences> searchObjs = new ArrayList<ForeignReferences>();
+	static protected List<ForeignCourt> searchObjs = new ArrayList<ForeignCourt>();
 	protected List<CitationCases> refCases;
 	
 	public Citations(){		
@@ -30,7 +30,7 @@ public abstract class Citations implements Search{
 	
 	/* Needs to be implemented in the class which is extending it	*/
 	
-	public abstract void searchCitationFormats(ForeignReferences fObj);
+	public abstract void searchCitationFormats(ForeignCourt fObj);
 	public abstract void searchRefCaseTitle();
 
 }
