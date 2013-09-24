@@ -1,9 +1,5 @@
 package courtreferences.model;
 
-/*
- * Country and Court Details model file
- * This class has functionalities to accesses the Country and Court data models to get those data to be loaded into the view combo boxes
- */
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +8,11 @@ import java.sql.Statement;
 import java.util.Vector;
 
 public class CountryModel {
+	/*
+	 * Country and Court Details model file
+	 * This class has functionalities to accesses the Country and Court data models to get those data to be loaded into the view combo boxes
+	 */
+	
 	private Statement stmt = null;
 	private ResultSet resultSet = null;
 	private ConnectionHandler connHndlr = null;
@@ -20,7 +21,9 @@ public class CountryModel {
 		
 	}	
 	
-	/* Fetches the names of the country in the database and returns to the view	*/
+	/* 
+	 * Fetches the names of the country in the database and returns to the view	
+	 */
 	
 	public Vector<String> getCountryValues(){
 		if(this.connHndlr == null)
@@ -47,7 +50,9 @@ public class CountryModel {
 		return countryNames;
 	}
 	
-	/* Fetches the names of the court based on the country name given as input	and returns to the view */ 
+	/* 
+	 * Fetches the names of the court based on the country name given as input	and returns to the view 
+	 */ 
 	
 	public Vector<String> getCourtValues(String countryname){
 		if(this.connHndlr == null)

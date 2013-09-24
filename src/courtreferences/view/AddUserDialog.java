@@ -1,10 +1,5 @@
 package courtreferences.view;
 
-/* 
- * This class contains the components of the "AddUser Dialog box"
- * Purpose : Functionalities for adding new user to the system 
- */
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -25,8 +20,9 @@ import courtreferences.model.*;
 
 public class AddUserDialog extends JDialog {
 
-	/**
-	 * 
+	/* 
+	 * This class contains the components of the "AddUser Dialog box"
+	 * Purpose : Functionalities for adding new user to the system 
 	 */
 	private static final long serialVersionUID = 1500815817804341818L;
 	private final JPanel contentPanel = new JPanel();
@@ -160,7 +156,8 @@ public class AddUserDialog extends JDialog {
 	
 	private void showFailureInsertDialog(){
 		String failure_msg = "The user " + this.txtNewUserName.getText() + " is already present in the system";
-		JOptionPane.showMessageDialog(null,failure_msg);
+		String window_title = "Error adding new User";
+		JOptionPane.showInternalConfirmDialog(this.getContentPane(),failure_msg,window_title, JOptionPane.WARNING_MESSAGE);
 	}
 	
 	/* Dialog to display the success message when the user name is currently enrolled	*/

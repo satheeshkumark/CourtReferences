@@ -1,12 +1,5 @@
 package courtreferences.model;
 
-/*
- * LoginDetails ModelFile
- * Contains methods and functionalities representing LoginDetails
- * Has functionalities for verifying the login credential and authenticating valid users 
- */
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,6 +7,12 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 public class LoginAuthenticator {
+	/*
+	 * LoginDetails ModelFile
+	 * Contains methods and functionalities representing LoginDetails
+	 * Has functionalities for verifying the login credential and authenticating valid users 
+	 */
+	
 	private int userstatus;
 	private String username;
 	private ConnectionHandler connHndlr;

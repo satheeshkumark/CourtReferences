@@ -1,16 +1,14 @@
 package courtreferences.view;
 
-/* 
- * This class contains the components of the "UploadDocument Dialog box"
- * Purpose : Functionalities for uploading the documents and extract content from the files 
- */
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -32,11 +30,13 @@ import courtreferences.model.*;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-public class UploadDocDialog extends JDialog {
+public class UploadDocDialog extends JDialog implements FontDefinition {
 
-	/**
-	 * 
+	/* 
+	 * This class contains the components of the "UploadDocument Dialog box"
+	 * Purpose : Functionalities for uploading the documents and extract content from the files 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JFileChooser jFileChooser;
@@ -51,21 +51,34 @@ public class UploadDocDialog extends JDialog {
 	private JComboBox cmbCountryNames;
 	private JLabel lblChooseTheCourt;
 	private JLabel lblChooseTheCountry;
+	private String processedUser;
+	private Main parentWindow;
 	
 	/**
 	 * Create the dialog.
 	 */
 	public UploadDocDialog() {
+		
+	}
+	
+	public UploadDocDialog(Main parentWindow){
 		setResizable(false);
+		//setModal(true);
+		setVisible(true);
 		/*	Initializes the components required for collecting the details of the space where the folder which is needed to be uploaded is present	*/
 		initComponents();
 		/*	Initializes corresponding event handlers	*/
 		createEvents();
+		this.setParentWindow(parentWindow);
+		if(parentWindow == null)
+			System.out.println("Null");
 	}
 	
 	/*	Initializes the components required for collecting the details of the space where the folder which is needed to be uploaded is present	*/
 	
 	private void initComponents(){
+		setFont(getDefaultTitleFont());
+		setTitle("Upload Your Documents");
 		this.CountryNameVector = new Vector<String>();
 		setBounds(100, 100, 603, 393);
 		getContentPane().setLayout(new BorderLayout());
@@ -76,36 +89,44 @@ public class UploadDocDialog extends JDialog {
 		lblChooseYourDocument = new JLabel("Choose your document");
 		lblChooseYourDocument.setBounds(313, 40, 193, 43);
 		contentPanel.add(lblChooseYourDocument);
+		lblChooseYourDocument.setFont(getDefaultTitleFont());
 		
 		textField = new JTextField();
 		textField.setBounds(33, 46, 218, 31);
-		contentPanel.add(textField);
 		textField.setColumns(10);
+		textField.setFont(getDefaultControlsFont());
+		contentPanel.add(textField);
 		
 		btnUpload = new JButton("Upload");
 		btnUpload.setBounds(107, 280, 100, 30);
+		btnUpload.setFont(getDefaultTitleFont());
 		contentPanel.add(btnUpload);
 		
 		btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(269, 280, 114, 30);
+		btnCancel.setFont(getDefaultTitleFont());
 		contentPanel.add(btnCancel);
 		
 		lblChooseTheCountry = new JLabel("Choose the country");
 		lblChooseTheCountry.setBounds(313, 122, 193, 37);
+		lblChooseTheCountry.setFont(getDefaultControlsFont());
 		contentPanel.add(lblChooseTheCountry);
 		
 		this.getCountryComboValues();
 		
 		cmbCountryNames = new JComboBox(this.CountryNameVector);
 		cmbCountryNames.setBounds(33, 122, 218, 31);
+		cmbCountryNames.setFont(getDefaultControlsFont());
 		contentPanel.add(cmbCountryNames);
 		
 		lblChooseTheCourt = new JLabel("Choose the Court");
 		lblChooseTheCourt.setBounds(313, 195, 162, 30);
+		lblChooseTheCourt.setFont(getDefaultControlsFont());
 		contentPanel.add(lblChooseTheCourt);
 		
 		cmbCourtNames = new JComboBox();
 		cmbCourtNames.setBounds(33, 195, 218, 30);
+		cmbCourtNames.setFont(getDefaultTitleFont());
 		contentPanel.add(cmbCourtNames);
 	}
 	
@@ -125,9 +146,10 @@ public class UploadDocDialog extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				jFileChooser = new JFileChooser();
+				jFileChooser.setFont(getDefaultTitleFont());
 				jFileChooser.setCurrentDirectory(new java.io.File("."));
-				jFileChooser.setDialogTitle("choosertitle");
-				jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				jFileChooser.setDialogTitle("Upload Files");
+				jFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 				jFileChooser.setAcceptAllFileFilterUsed(false);
 				if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 	                File directoryPath = jFileChooser.getCurrentDirectory();
@@ -160,6 +182,9 @@ public class UploadDocDialog extends JDialog {
 				System.out.println("Selected country name : " + countryname + "  " + courtname);
 				parseCaseDocuments(countryname,courtname);
 				closeDialog();
+				System.out.println("Inside upload doc dialog");
+				updateMainWindowTable();
+				new CitationReferencesView(-1);
 			}
 		});
 		
@@ -170,7 +195,9 @@ public class UploadDocDialog extends JDialog {
 			}
 		});
 		
-		/*	Load the names of courts belonging to corresponding country when the country name is changed	*/
+		/*	
+		 * Load the names of courts belonging to corresponding country when the country name is changed	
+		 */
 		
 		cmbCountryNames.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -186,16 +213,41 @@ public class UploadDocDialog extends JDialog {
 		});
 	}
 	
+	private void updateMainWindowTable(){
+		String[][] mainTableData = this.getParentWindow().getMainTableData();
+		this.getParentWindow().reloadDataIntoJTable(mainTableData);
+	}
+	
 	/*	Method which invokes parsing the pdf content to extract the required information	*/
 	
 	private void parseCaseDocuments(String countryname,String courtname){
 		File dir = new File(this.textField.getText());
 		for(File child : dir.listFiles()){
+			CourtDocument cdt = null;
 			if(this.parseObj == null){
-				this.parseObj = new ParsePdfDoc(countryname,courtname);
+				this.parseObj = new ParsePdfDoc(countryname, courtname, this.getProcessedUser());
 			}
-			System.out.println("Processing input file :" + child.getAbsolutePath());
-			this.parseObj.processPDFForCaseDetails(child.getAbsolutePath());
+			if(countryname.equalsIgnoreCase("South Africa") && courtname.equalsIgnoreCase("Constitutional Court")){
+				if(child.getName().endsWith(".pdf"))
+					cdt = this.parseObj.processPDFForCaseDetails(child.getAbsolutePath(),child.getName());
+				else{
+					if(displayConfirmSkipDialogBox() == 1)
+						break;
+					else
+						continue;
+				}
+			}
+			if(cdt != null){
+				if(CaseDetailsModel.checkForDuplicates(cdt.getCountryId(), cdt.getCourtId(), cdt.getCaseId())){
+					if(displayDuplicateDialogBox() == 0)
+						cdt.writeToDb();
+					else
+						continue;
+				}
+				else{
+					cdt.writeToDb();
+				}
+			}
 		}
 	}
 	
@@ -204,6 +256,18 @@ public class UploadDocDialog extends JDialog {
 	      if (win != null) {
 	         win.dispose();
 	      }
+	}
+	
+	private int displayConfirmSkipDialogBox(){
+		String alertMessage = "Error in file format \n Press YES to skip this file and continue processing next.\n Press NO otherwise"; 
+		String alertWindowTitle = "Incompatible File format";		
+		return JOptionPane.showInternalConfirmDialog(this.getContentPane(), alertMessage, alertWindowTitle, JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	private int displayDuplicateDialogBox(){
+		String alertMessage = "Seems this case already exists.\nPress No to skip this entry or Yes to make a new entry for this case\n"; 
+		String alertWindowTitle = "Case already exists";		
+		return JOptionPane.showInternalConfirmDialog(this.getContentPane(), alertMessage, alertWindowTitle, JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	/*	Gets the name of the courts to be loaded into the combo box for corresponding country	*/
@@ -235,5 +299,33 @@ public class UploadDocDialog extends JDialog {
 
 	public void setCourtNameVector(Vector<String> courtNameVector) {
 		CourtNameVector = courtNameVector;
+	}
+
+	@Override
+	public Font getDefaultControlsFont() {
+		// TODO Auto-generated method stub
+		return new Font("Arial",Font.BOLD, 12);
+	}
+
+	@Override
+	public Font getDefaultTitleFont() {
+		// TODO Auto-generated method stub
+		return new Font("Arial",Font.BOLD, 12);
+	}
+
+	public String getProcessedUser() {
+		return processedUser;
+	}
+
+	public void setProcessedUser(String processedUser) {
+		this.processedUser = processedUser;
+	}
+
+	public Main getParentWindow() {
+		return parentWindow;
+	}
+
+	public void setParentWindow(Main parentWindow) {
+		this.parentWindow = parentWindow;
 	}
 }

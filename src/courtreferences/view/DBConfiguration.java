@@ -1,17 +1,9 @@
 package courtreferences.view;
 
-/* 
- * This class contains the components for updating the "Database configuration settings"
- * Purpose : Functionalities for updating the db settings
- */
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
+import java.awt.Font;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -24,13 +16,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
-public class DBConfiguration extends JDialog {
+import courtreferences.model.ConnectionHandler;
+
+public class DBConfiguration extends JDialog implements FontDefinition {
 	
-	/**
-	 * 
+	/* 
+	 * This class contains the components for updating the "Database configuration settings"
+	 * Purpose : Functionalities for updating the db settings
 	 */
+	
 	private static final long serialVersionUID = 1L;
-	private static final String dbconfigfile = new String("src/courtreferences/resources/dbconfig.txt");
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtHostName;
 	private JTextField txtPortNumber;
@@ -67,55 +62,65 @@ public class DBConfiguration extends JDialog {
 		{
 			lblHostName = new JLabel("HostName");
 			lblHostName.setBounds(38, 12, 143, 37);
+			lblHostName.setFont(getDefaultControlsFont());
 			contentPanel.add(lblHostName);
 		}
 		{
 			lblPortnumber = new JLabel("PortNumber");
 			lblPortnumber.setBounds(38, 51, 159, 42);
+			lblPortnumber.setFont(getDefaultControlsFont());
 			contentPanel.add(lblPortnumber);
 		}
 		{
 			lblDatabasename = new JLabel("DatabaseName");
 			lblDatabasename.setBounds(38, 101, 159, 29);
+			lblDatabasename.setFont(getDefaultControlsFont());
 			contentPanel.add(lblDatabasename);
 		}
 		{
 			lblUserName = new JLabel("UserName");
 			lblUserName.setBounds(38, 136, 159, 29);
+			lblUserName.setFont(getDefaultControlsFont());
 			contentPanel.add(lblUserName);
 		}
 		{
 			lblPassword = new JLabel("Password");
 			lblPassword.setBounds(38, 173, 126, 37);
+			lblPassword.setFont(getDefaultControlsFont());
 			contentPanel.add(lblPassword);
 		}
 		{
 			txtHostName = new JTextField();
 			txtHostName.setBounds(188, 21, 219, 29);
+			txtHostName.setFont(getDefaultControlsFont());
 			contentPanel.add(txtHostName);
 			txtHostName.setColumns(10);
 		}
 		{
 			txtPortNumber = new JTextField();
 			txtPortNumber.setBounds(188, 60, 219, 33);
+			txtPortNumber.setFont(getDefaultTitleFont());
 			contentPanel.add(txtPortNumber);
 			txtPortNumber.setColumns(10);
 		}
 		{
 			txtDbName = new JTextField();
 			txtDbName.setBounds(188, 107, 219, 29);
+			txtDbName.setFont(getDefaultTitleFont());
 			contentPanel.add(txtDbName);
 			txtDbName.setColumns(10);
 		}
 		{
 			txtUserName = new JTextField();
 			txtUserName.setBounds(188, 141, 219, 29);
+			txtUserName.setFont(getDefaultTitleFont());
 			contentPanel.add(txtUserName);
 			txtUserName.setColumns(10);
 		}
 		{
 			passwordField = new JPasswordField();
 			passwordField.setBounds(188, 179, 219, 31);
+			passwordField.setFont(getDefaultTitleFont());
 			contentPanel.add(passwordField);
 		}
 		{
@@ -125,12 +130,14 @@ public class DBConfiguration extends JDialog {
 			{
 				UpdateButton = new JButton("Update");
 				UpdateButton.setActionCommand("OK");
+				UpdateButton.setFont(getDefaultTitleFont());
 				buttonPane.add(UpdateButton);
 				getRootPane().setDefaultButton(UpdateButton);
 			}
 			{
 				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
+				cancelButton.setFont(getDefaultTitleFont());
 				buttonPane.add(cancelButton);
 			}
 		}
@@ -139,29 +146,12 @@ public class DBConfiguration extends JDialog {
 	/*	Loads default configuration settings to connect to mysql db from config file	*/
 	
 	private void loadDefaultValues(){
-		Scanner sc = null;
-		try{			
-			sc = new Scanner(new FileReader(DBConfiguration.dbconfigfile));	
-			String hostname = sc.nextLine();
-			String port 	= sc.nextLine();
-			String dbname 	= sc.nextLine();
-			String username = sc.nextLine();
-			String password = sc.nextLine();
-			this.txtHostName.setText(hostname);
-			this.txtPortNumber.setText(port);
-			this.txtDbName.setText(dbname);
-			this.txtUserName.setText(username);
-			this.passwordField.setText(password);
-		}	
-		catch(IOException e){
-			System.out.println("IO Exception " + e.getMessage());
-		}
-		catch(Exception e){
-			System.out.println("Exception: " + e.getMessage());
-		}
-		finally{
-			sc.close();			
-		}
+		Map<String,String> configMap = new ConnectionHandler().getDefaultDbConfigParameters();
+		txtHostName.setText(configMap.get("hostname"));
+		txtPortNumber.setText(configMap.get("port"));
+		txtDbName.setText(configMap.get("dbname"));
+		txtUserName.setText(configMap.get("username"));
+		passwordField.setText(configMap.get("password"));
 	}
 	
 	private void createEvents(){
@@ -174,7 +164,6 @@ public class DBConfiguration extends JDialog {
 				int reply = JOptionPane.showConfirmDialog(null,title,message,JOptionPane.YES_NO_OPTION);
 				if(reply == 0){
 					updateDbConfigFile();
-					showSuccessDialog();
 				}
 				closeDialog();
 			}
@@ -190,6 +179,10 @@ public class DBConfiguration extends JDialog {
 		JOptionPane.showMessageDialog(null,"The Database settings are updated");
 	}
 	
+	private void showFailureDialog(){
+		JOptionPane.showMessageDialog(null,"The Database settings cannot be updated \n Please check settings and try again");
+	}
+	
 	private void closeDialog(){
 		this.dispose();
 	}
@@ -197,20 +190,23 @@ public class DBConfiguration extends JDialog {
 	/*	Updates the new db settings in the dbconfig.txt file	*/
 	
 	private void updateDbConfigFile(){
-		FileWriter fstream;
-		try {
-			fstream = new FileWriter(DBConfiguration.dbconfigfile);
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(this.txtHostName.getText().toString()+"\n");
-			out.write(this.txtPortNumber.getText().toString()+"\n");
-			out.write(this.txtDbName.getText().toString()+"\n");
-			out.write(this.txtUserName.getText().toString()+"\n");
-			out.write(this.passwordField.getText().toString()+"\n");
-			out.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Exception while updating");
-			e.printStackTrace();
-		}       
+		@SuppressWarnings("deprecation")
+		int updateStatus = new ConnectionHandler().updateDBSettings(txtHostName.getText(), txtPortNumber.getText(), txtDbName.getText(), txtUserName.getText(), passwordField.getText());
+		if(updateStatus == 1)
+			showSuccessDialog();
+		else
+			showFailureDialog();
+	}
+	
+	@Override
+	public Font getDefaultControlsFont() {
+		// TODO Auto-generated method stub
+		return new Font("Arial",Font.BOLD, 12);
+	}
+
+	@Override
+	public Font getDefaultTitleFont() {
+		// TODO Auto-generated method stub
+		return new Font("Arial",Font.BOLD, 12);
 	}
 }

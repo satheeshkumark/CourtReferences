@@ -1,12 +1,8 @@
 package courtreferences.view;
 
-/* 
- * This class contains the components of the "RemoveUser Dialog box"
- * Purpose : Functionalities for removing user from the system 
- */
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,10 +17,11 @@ import courtreferences.model.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class RemoveUserDialog extends JDialog {
+public class RemoveUserDialog extends JDialog implements FontDefinition{
 
-	/**
-	 * 
+	/* 
+	 * This class contains the components of the "RemoveUser Dialog box"
+	 * Purpose : Functionalities for removing user from the system 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -40,7 +37,7 @@ public class RemoveUserDialog extends JDialog {
 	public RemoveUserDialog() {
 		/*	Creates the components required for this window	*/
 		initiateComponents();
-		/*	Initilizes the events associated with the components	*/
+		/*	Initializes the events associated with the components	*/
 		createEvents();
 	}
 	
@@ -57,11 +54,13 @@ public class RemoveUserDialog extends JDialog {
 		{
 			lblEnterUserName = new JLabel("Enter User Name");
 			lblEnterUserName.setBounds(52, 101, 149, 33);
+			lblEnterUserName.setFont(getDefaultControlsFont());
 			contentPanel.add(lblEnterUserName);
 		}
 		{
 			txtUserName = new JTextField();
 			txtUserName.setBounds(206, 104, 171, 27);
+			txtUserName.setFont(getDefaultControlsFont());
 			contentPanel.add(txtUserName);
 			txtUserName.setColumns(10);
 		}
@@ -73,11 +72,13 @@ public class RemoveUserDialog extends JDialog {
 				btnDeleteUser = new JButton("RemoveUser");
 				btnDeleteUser.setActionCommand("OK");
 				buttonPane.add(btnDeleteUser);
+				btnDeleteUser.setFont(getDefaultControlsFont());
 				getRootPane().setDefaultButton(btnDeleteUser);
 			}
 			{
 				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
+				cancelButton.setFont(getDefaultControlsFont());
 				buttonPane.add(cancelButton);
 			}
 		}
@@ -138,5 +139,17 @@ public class RemoveUserDialog extends JDialog {
 	
 	private void closeDialog(){
 		this.dispose();
+	}
+
+	@Override
+	public Font getDefaultControlsFont() {
+		// TODO Auto-generated method stub
+		return new Font("Arial",Font.BOLD, 12);
+	}
+
+	@Override
+	public Font getDefaultTitleFont() {
+		// TODO Auto-generated method stub
+		return new Font("Arial",Font.BOLD, 12);
 	}
 }

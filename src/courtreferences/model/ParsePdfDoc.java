@@ -8,25 +8,29 @@ import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardDecryptionMaterial;
 import org.apache.pdfbox.util.PDFTextStripper;
 
-/* 
- * Contains basic structure of each pdf file which is needed to be processed
- * The countries which have pdf document as their court documents can be instantiated with this class
- * Have methods to parse PDF documents and extract titles and the contents themselves
- * 
-*/
+import courtreferences.southafrica.SouthAfricanCourtDocument;
 
 public class ParsePdfDoc {
+	/* 
+	 * Contains basic structure of each pdf file which is needed to be processed
+	 * The countries which have pdf document as their court documents can be instantiated with this class
+	 * Have methods to parse PDF documents and extract titles and the contents themselves
+	 * 
+	*/
+
 	private String countryName;
 	private String courtName;
+	private String processedUserName;
 	private int fileLength;
 	private int noOfPages;
 	
 	public ParsePdfDoc(){
 	}
 	
-	public ParsePdfDoc(String countryname,String courtname){
+	public ParsePdfDoc(String countryname,String courtname, String processedUser){
 		this.setCountryName(countryname);
-		this.setCourtName(courtname); 
+		this.setCourtName(courtname);
+		this.setProcessedUserName(processedUser);
 	}
 	
 	public String getCourtName() {
@@ -61,12 +65,14 @@ public class ParsePdfDoc {
 		this.noOfPages = noOfPages;
 	}
 	
-	public void processPDFForCaseDetails(String pdfFile){
+	public CourtDocument processPDFForCaseDetails(String pdfFile, String sourceFileName){
+		//CitationCases.setRefid(1);
 		if(this.countryName.equals("South Africa")){
-			processSouthAfricanCaseDetails(pdfFile);
+			return processSouthAfricanCaseDetails(pdfFile, sourceFileName);
 		}
 		else{
 			System.out.println("The files belongs to these country cannot be processed");
+			return null;
 		}
 	}
 	
@@ -74,14 +80,13 @@ public class ParsePdfDoc {
 	 * Similar methods can be added for other country files. It should be written based on the structure of those documents 
 	 * */
 	
-	void processSouthAfricanCaseDetails(String pdfFile){
+	CourtDocument processSouthAfricanCaseDetails(String pdfFile, String sourceFileName){
 		int startPage = 1;
 		int endPage = 1;
-		//System.out.println("PDF File Name : " + pdfFile);
 		String pdfFileContent = extractContentFromPDF(pdfFile,startPage,endPage);
 		int filelength = pdfFile.length();
 		this.setFileLength(filelength);
-		SouthAfricanFiles saf = new SouthAfricanFiles(this.getCountryName(),this.getCourtName());
+		SouthAfricanCourtDocument saf = new SouthAfricanCourtDocument(this.getCountryName(),this.getCourtName(), this.getProcessedUserName(), sourceFileName);
 		
 		saf.extractCaseId(this.getCourtName(),pdfFileContent);
 		saf.extractParticipants(this.getCourtName(),pdfFileContent);
@@ -93,8 +98,7 @@ public class ParsePdfDoc {
 			pageContentList.add(extractContentFromPDF(pdfFile,pageNo,pageNo));	
 		}
 		saf.extractCitations(this.getCourtName(),pageContentList);
-		//saf.writeDetails();
-		//saf.printDetails();
+		return saf;
 	}
 	
 	/* Gets the input PDF file name, start and end page of PDF and returns the text content using PDFBox API */
@@ -145,5 +149,13 @@ public class ParsePdfDoc {
 	       	}
 		}
 		return textContent;
+	}
+
+	public String getProcessedUserName() {
+		return processedUserName;
+	}
+
+	public void setProcessedUserName(String processedUserName) {
+		this.processedUserName = processedUserName;
 	}
 }

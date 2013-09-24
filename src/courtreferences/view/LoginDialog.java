@@ -1,10 +1,6 @@
 package courtreferences.view;
 
-/* 
- * This class contains the components for prompting the user to enter login details
- * Purpose : Functionalities for getting the login credentials and authenticating the user
- */
-
+import java.awt.Font;
 import java.awt.Window;
 
 import javax.swing.JButton;
@@ -21,9 +17,10 @@ import courtreferences.model.*;
 
 import java.awt.Color;
 
-public class LoginDialog extends JDialog {
-	/**
-	 * 
+public class LoginDialog extends JDialog implements FontDefinition{
+	/* 
+	 * This class contains the components for prompting the user to enter login details
+	 * Purpose : Functionalities for getting the login credentials and authenticating the user
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
@@ -56,6 +53,7 @@ public class LoginDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public LoginDialog() {
+		this.setUserStatus(-1);
 		/*	Initialize all the components	*/
 		initComponents();
 		/*	Initialize the Event handlers	*/
@@ -70,7 +68,6 @@ public class LoginDialog extends JDialog {
 		getContentPane().setLayout(null);
 		
 		JPanel controlsPanel = new JPanel();
-		controlsPanel.setToolTipText("controlsPanel");
 		controlsPanel.setBounds(0, 24, 450, 187);
 		getContentPane().add(controlsPanel);
 		controlsPanel.setLayout(null);
@@ -78,39 +75,45 @@ public class LoginDialog extends JDialog {
 		lblUsername = new JLabel("UserName");
 		lblUsername.setBounds(59, 30, 93, 38);
 		controlsPanel.add(lblUsername);
+		lblUsername.setFont(getDefaultControlsFont());
 		
 		lblPassword = new JLabel("Password");
 		lblPassword.setBounds(59, 96, 87, 45);
 		controlsPanel.add(lblPassword);
+		lblPassword.setFont(getDefaultControlsFont());
 		
 		textField = new JTextField();
 		textField.setBounds(181, 34, 145, 31);
 		controlsPanel.add(textField);
 		textField.setColumns(10);
+		textField.setFont(getDefaultControlsFont());
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(180, 103, 145, 31);
 		controlsPanel.add(passwordField);
+		passwordField.setFont(getDefaultControlsFont());
 		
 		lblInvalidPassword = new JLabel("Invalid Credentials");
 		lblInvalidPassword.setVisible(false);
 		lblInvalidPassword.setForeground(Color.RED);
 		lblInvalidPassword.setBackground(Color.LIGHT_GRAY);
 		lblInvalidPassword.setBounds(59, 140, 208, 35);
+		lblInvalidPassword.setFont(getDefaultTitleFont());
 		controlsPanel.add(lblInvalidPassword);
 		
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setToolTipText("buttonsPanel");
 		buttonsPanel.setBounds(0, 212, 450, 76);
 		getContentPane().add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 		
 		btnLogin = new JButton("LogIn");
 		btnLogin.setBounds(72, 12, 106, 33);
+		btnLogin.setFont(getDefaultTitleFont());
 		buttonsPanel.add(btnLogin);
 		
 		btnCancel = new JButton("Cancel");
 		btnCancel.setBounds(223, 12, 106, 33);
+		btnCancel.setFont(getDefaultTitleFont());
 		buttonsPanel.add(btnCancel);
 	}
 	
@@ -132,14 +135,14 @@ public class LoginDialog extends JDialog {
 		});
 	}
 	
-	/*	The obtained credentials are obtained from the user through the dialog box and the result of the authenticity can be given to the main window	*/ 
+	/*	The obtained credential from the user through the dialog box and the result of the authenticity can be given to the main window	*/ 
 	
 	private void verifyCredentials(){
 		LoginAuthenticator ln = new LoginAuthenticator();
 		String username = textField.getText();
+		@SuppressWarnings("deprecation")
 		String password = passwordField.getText();
 		int userstatus = ln.verifyAuthentication(username,password);
-		System.out.println("status of the user : " + userstatus);
 		this.setUsername(username);
 		this.setUserStatus(userstatus);
 		displayStatus();
@@ -154,7 +157,7 @@ public class LoginDialog extends JDialog {
 			this.lblInvalidPassword.setText("Invalid Credentials...");
 		}
 		else{
-			System.out.println("Closing the window");
+			//System.out.println("Closing the window");
 			this.textField.setText("");
 			this.passwordField.setText("");
 			this.dispose();
@@ -168,5 +171,13 @@ public class LoginDialog extends JDialog {
 	      if (win != null) {
 	         win.dispose();
 	      }
+	}
+	
+	public Font getDefaultControlsFont(){
+		return new Font("Arial",Font.BOLD, 12);
+	}
+	
+	public Font getDefaultTitleFont(){
+		return new Font("Arial",Font.BOLD, 12);
 	}
 }

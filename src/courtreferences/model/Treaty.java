@@ -1,6 +1,10 @@
 package courtreferences.model;
 
 public class Treaty {
+	/*
+	 * Model class for Treaty
+	 * Defines search pattern namely Title and Format Patterns for each Treaty
+	 */	
 	private int tId;
 	private String tTitle1_Eng;
 	private String tTitle2_Eng;
@@ -14,6 +18,27 @@ public class Treaty {
 	private String tDateType;
 	private String tTitlePattern;
 	private String tFormatPattern;
+	
+	public Treaty(){
+		
+	}
+	
+	public Treaty(int Id, String title1_Eng, String title2_Eng, String title3_Eng, String abbreviation, String title_Fr, String title_Ge, String title_Sp, String title_Po, String date, String dateType, String titlePattern, String formatPattern){
+		this.settId(Id);
+		this.settTitle1_Eng(title1_Eng);
+		this.settTitle2_Eng(title2_Eng);
+		this.settTitle3_Eng(title3_Eng);
+		this.settAbbreviation(abbreviation);
+		this.settTitle_Fr(title_Fr);
+		this.settTitle_Ge(title_Ge);
+		this.settTitle_Po(title_Po);
+		this.settTitle_Sp(title_Sp);
+		this.settDate(date);
+		this.settDateType(dateType);
+		this.settTitlePattern(titlePattern);
+		this.settFormatPattern(formatPattern);
+	}
+	
 	public int gettId() {
 		return tId;
 	}
